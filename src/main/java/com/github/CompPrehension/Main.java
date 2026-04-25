@@ -20,8 +20,7 @@ public class Main {
         }
     }
 
-    private static DecisionTreeTrace isGoodPetFor(String humanName, String petName) {
-        DomainSolvingModel model = new DomainSolvingModel("model", DomainSolvingModel.BuildMethod.LOQI);
+    private static DecisionTreeTrace isGoodPetFor(DomainSolvingModel model, String humanName, String petName) {
         DomainModel domain = model.getDomainModel();
         Map<String, ObjectRef> variables = LearningSituation.collectDecisionTreeVariables(model.getDomainModel());
         ObjectContainer objects = domain.getObjects();
@@ -58,7 +57,7 @@ public class Main {
                 System.out.print(" + ");
                 System.out.print(pet);
                 System.out.print(" = ");
-                System.out.println(isGoodPetFor(human, pet).getBranchResult());
+                System.out.println(isGoodPetFor(model, human, pet).getBranchResult());
             }
         }
 
