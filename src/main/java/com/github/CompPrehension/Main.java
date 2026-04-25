@@ -19,16 +19,15 @@ public class Main {
             throw new RuntimeException(e);
         }
     }
-    
-    private static void helloWorld() throws FileNotFoundException {
+
+    private static DecisionTreeTrace isGoodPetFor(String humanName, String petName) {
         DomainSolvingModel model = new DomainSolvingModel("model", DomainSolvingModel.BuildMethod.LOQI);
         DomainModel domain = model.getDomainModel();
         Map<String, ObjectRef> variables = LearningSituation.collectDecisionTreeVariables(model.getDomainModel());
         ObjectContainer objects = domain.getObjects();
 
-
-        ObjectRef owner = objects.get("Alice").getReference();
-        ObjectRef pet = objects.get("Basya").getReference();
+        ObjectRef owner = objects.get(humanName).getReference();
+        ObjectRef pet = objects.get(petName).getReference();
 
         variables.put("owner", owner);
         variables.put("pet", pet);
@@ -39,10 +38,14 @@ public class Main {
                 null
         );
 
-        DecisionTreeTrace decisionTreeTrace = DecisionTreeReasoner.solve(
+        DecisionTreeTrace trace = DecisionTreeReasoner.solve(
                 model.getDecisionTree(),
                 situation
         );
-        System.out.println(decisionTreeTrace.getBranchResult());
+        return trace;
+    }
+    
+    private static void helloWorld() throws FileNotFoundException {
+        System.out.println(isGoodPetFor("Alice", "Tuzik").getBranchResult());
     }
 }
