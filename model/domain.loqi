@@ -1,11 +1,44 @@
-//Класс с именем "Element"
-class Element {
-    //Свойство класса, с именем "countOfTokens" и типом int в диапазоне 1-2
-    class prop countOfTokens: int[1,2] ;
-    //Свойство объектов класса, с именем state и типом State (это enum)
-    obj prop state: State ;
 
-    //Отношение, которую могут иметь объекты класса с именем "has",
-    // связывает объекты данного класса с объектами типа Token как "один-ко-многим"
-    rel has(Token) : {1 -> *} ;
+// Классы сущностей в системе
+
+class Human 
+
+class Pet {
+    rel owner(Human) : {* -> 1};
+}
+
+class Dog : Pet {
+    obj prop kind: boolean; // Хороший ли характер
+}
+
+class Cat : Pet 
+
+
+
+// Люди в системе
+
+obj Alice : Human
+obj Peter : Human
+
+// Коты в системе
+
+obj Basya : Cat {
+    owner(Peter);
+}
+
+obj Tuzik : Cat {
+    owner(Alice);
+}
+
+
+// Собаки в системе
+
+obj Sharik: Dog {
+    owner(Peter);
+    kind = true;
+}
+
+obj Ostin: Dog {
+    owner(Alice);
+    kind = false;
 }
