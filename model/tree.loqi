@@ -1,18 +1,56 @@
-tpg isBasya(owner: Human, pet: Pet) {
+tpg isGoodPetFor(owner: Human, pet: Pet) {
     ask (pet is class:Cat) out false else {
-        ask (pet == obj:Basya) out false else {
+        ask(pet == obj:Basya) out false else {
+            conclude: true as BasyaIsGoodBoy;
+        } as IsBasya;
+        conclude: false as IsNotBasya;
+    } as IsACat;
+
+    ask(pet is class:Dog) out false else {
+        ask(pet => owner(owner)) out false else {
             conclude: true;
-        };
-        conclude: false;
-    };
+        } as IsAHonorDog;
+        ask(pet.kind) out false else {
+            conclude: true;
+        } as IsKindDog;
+        conclude: false as IsBadBoy;
+    } as IsADog;
 
-    ask(pet=>owner(owner)) out false else {
-        conclude: true;
-    };
-
-    ask(pet.kind) out false else {
-        conclude: true;
-    };
-
-    conclude: false;
+    conclude: false as IDKPet;
 }
+
+meta for IsACat [
+    msg = "Это кот/кошка";
+]
+
+meta for IsBasya [
+    msg = "Этот кот - Бася";
+]
+
+meta for BasyaIsGoodBoy [
+    msg = "Всем известно, что Бася - хороший кот";
+]
+
+meta for IsNotBasya [
+    msg = "Это не бася, всем известно, что ТОЛЬКО Бася - хороший кот";
+]
+
+meta for IsADog [
+    msg = "Это собака/пёс";
+]
+
+meta for IsAHonorDog [
+    msg = "Эта собака/пёс верна своему хозяину";
+]
+
+meta for IsKindDog [
+    msg = "Эта собака/пёс имеет добрый характер";
+]
+
+meta for IsBadBoy [
+    msg = "Эта собака/пес не хочет дружить с этим человеком";
+]
+
+meta for IDKPet [
+    msg = "Не удалось определить вид питомца";
+]
