@@ -1,3 +1,6 @@
-tpg helloWorld(owner: Human, pet: Pet) {
-    conclude : false;
+tpg isBasya(owner: Human, pet: Pet) {
+    ask (pet == obj:Basya) out false else {
+        conclude: true;
+    };
+    conclude: false;
 }

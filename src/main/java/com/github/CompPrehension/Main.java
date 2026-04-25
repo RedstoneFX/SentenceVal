@@ -7,10 +7,8 @@ import its.model.definition.ObjectRef;
 import its.reasoner.LearningSituation;
 import its.reasoner.nodes.DecisionTreeReasoner;
 import its.reasoner.nodes.DecisionTreeTrace;
-import org.jetbrains.annotations.NotNull;
 
 import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.util.Map;
 
 public class Main {
@@ -45,6 +43,6 @@ public class Main {
                 model.getDecisionTree(),
                 situation
         );
-        System.out.println(decisionTreeTrace.toString());
+        System.out.println(decisionTreeTrace.getBranchResult());
     }
 }
