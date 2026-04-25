@@ -1,6 +1,18 @@
 tpg isBasya(owner: Human, pet: Pet) {
-    ask (pet == obj:Basya) out false else {
+    ask (pet is class:Cat) out false else {
+        ask (pet == obj:Basya) out false else {
+            conclude: true;
+        };
+        conclude: false;
+    };
+
+    ask(pet=>owner(owner)) out false else {
         conclude: true;
     };
+
+    ask(pet.kind) out false else {
+        conclude: true;
+    };
+
     conclude: false;
 }
