@@ -8,11 +8,11 @@ tpg isGoodPetFor(owner: Human, pet: Pet) {
 
     ask(pet is class:Dog) out false else {
         ask(pet => owner(owner)) out false else {
-            conclude: true;
-        } as IsAHonorDog;
+            conclude: true as IsAHonorDog;
+        } as IsThisAHonorDog;
         ask(pet.kind) out false else {
-            conclude: true;
-        } as IsKindDog;
+            conclude: true as IsAKindDog;
+        } as IsThisAKindDog;
         conclude: false as IsBadBoy;
     } as IsADog;
 
@@ -20,11 +20,11 @@ tpg isGoodPetFor(owner: Human, pet: Pet) {
 }
 
 meta for IsACat [
-    msg = "Это кот/кошка";
+    msg = "Это кот/кошка?";
 ]
 
 meta for IsBasya [
-    msg = "Этот кот - Бася";
+    msg = "Этот кот - Бася?";
 ]
 
 meta for BasyaIsGoodBoy [
@@ -36,14 +36,22 @@ meta for IsNotBasya [
 ]
 
 meta for IsADog [
-    msg = "Это собака/пёс";
+    msg = "Это собака/пёс?";
+]
+
+meta for IsThisAHonorDog [
+    msg = "Эта собака/пёс верна своему хозяину?";
+]
+
+meta for IsThisAKindDog [
+    msg = "Эта собака/пёс имеет добрый характер?";
 ]
 
 meta for IsAHonorDog [
     msg = "Эта собака/пёс верна своему хозяину";
 ]
 
-meta for IsKindDog [
+meta for IsAKindDog [
     msg = "Эта собака/пёс имеет добрый характер";
 ]
 
