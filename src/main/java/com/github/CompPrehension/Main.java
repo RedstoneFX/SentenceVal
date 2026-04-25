@@ -2,11 +2,13 @@ package com.github.CompPrehension;
 
 import its.model.DomainSolvingModel;
 import its.model.definition.DomainModel;
+import its.model.definition.MetaData;
 import its.model.definition.ObjectContainer;
 import its.model.definition.ObjectRef;
 import its.reasoner.LearningSituation;
 import its.reasoner.nodes.DecisionTreeReasoner;
 import its.reasoner.nodes.DecisionTreeTrace;
+import its.reasoner.nodes.DecisionTreeTraceElement;
 
 import java.io.FileNotFoundException;
 import java.util.Map;
@@ -53,13 +55,33 @@ public class Main {
 
         for(String human : humanNames) {
             for(String pet : petNames) {
+                DecisionTreeTrace answer = isGoodPetFor(model, human, pet);
                 System.out.print(human);
                 System.out.print(" + ");
                 System.out.print(pet);
                 System.out.print(" = ");
-                System.out.println(isGoodPetFor(model, human, pet).getBranchResult());
+                System.out.println(answer.getBranchResult());
+                System.out.println(describeAnswer(answer));
+                System.out.println();
             }
         }
 
+    }
+
+    private static String describeAnswer(DecisionTreeTrace answer) {
+        StringBuilder description = new StringBuilder();
+
+        for (DecisionTreeTraceElement<?, ?> element : answer) {
+            MetaData meta = element.getNode().getMetadata();
+            if(meta.containsAny("msg")) {
+                description.append(meta.get("msg"));
+            } else {
+                description.append("Узел не предоставил объяснение");
+            }
+            if(element != answer.getLast()) {
+                description.append("\n");
+            }
+        }
+        return description.toString();
     }
 }
