@@ -46,6 +46,21 @@ public class Main {
     }
     
     private static void helloWorld() throws FileNotFoundException {
-        System.out.println(isGoodPetFor("Alice", "Tuzik").getBranchResult());
+
+        DomainSolvingModel model = new DomainSolvingModel("model", DomainSolvingModel.BuildMethod.LOQI);
+
+        String[] humanNames = {"Alice", "Peter"};
+        String[] petNames = {"Basya", "Tuzik", "Sharik", "Ostin"};
+
+        for(String human : humanNames) {
+            for(String pet : petNames) {
+                System.out.print(human);
+                System.out.print(" + ");
+                System.out.print(pet);
+                System.out.print(" = ");
+                System.out.println(isGoodPetFor(human, pet).getBranchResult());
+            }
+        }
+
     }
 }
