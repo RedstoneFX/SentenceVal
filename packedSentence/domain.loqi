@@ -1,0 +1,76 @@
+//////////////////// ПОСТОЯННЫЕ
+
+enum Side {
+    LEFT,
+    RIGHT,
+    ANY
+}
+
+class PackedWord {
+    obj prop text : string;
+    obj prop hasSide: Side;
+    rel isChildOf(PackedWord) : partial;
+    rel isLeftSiblingOf(PackedWord);
+    rel isRightSiblingOf(PackedWord) : opposite to PackedWord->isLeftSiblingOf;
+}
+
+class ActualWord {
+    obj prop text: string;
+    rel isStraitAfter(ActualWord): linear;
+    rel isStraitBefore(ActualWord): opposite to isStraitAfter;
+    rel isAfter(ActualWord): transitive to isStraitAfter;
+    rel isBefore(ActualWord): transitive to isStraitBefore;
+}
+
+//////////////////// ОЖИДАЕМОЕ ПРЕДЛОЖЕНИЕ
+
+
+// Предложение:
+// I am learning .
+
+
+// Слово "I" зависит от слова "learning" и всегда СЛЕВА от него.
+obj word1 : PackedWord {
+    text = "I";
+    hasSide(LEFT);
+    isChildOf(word3);
+    isLeftSiblingOf(word2);
+}
+
+// Слово "am" зависит от слова "learning" и всегда СЛЕВА от него.
+// Дополнительно: всегда справа от соседа "I"
+obj word2 : PackedWord {
+    text = "am";
+    hasSide(LEFT);
+    isChildOf(word3);
+    // isRightSiblingOf(word1);
+}
+
+// Слово "learning" является корневым словом
+obj word3 : PackedWord {
+    text = "learning";
+}
+
+// Слово "." зависит от слова "learning" и всегда СПРАВА от него.
+obj word4 : PackedWord {
+    text = ".";
+    hasSide(RIGHT);
+    isChildOf(word3);
+}
+
+
+//////////////////// ФАКТИЧЕСКОЕ ПРЕДЛОЖЕНИЕ
+
+obj input1 : ActualWord {
+    text = "am";
+}
+
+obj input2 : ActualWord {
+    text = "I";
+    isStraitAfter(input1);
+}
+
+obj input3 : ActualWord {
+    text = "learning";
+    isStraitAfter(input2);
+}

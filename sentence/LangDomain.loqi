@@ -1,0 +1,37 @@
+
+// Общее перечисление сторон
+enum Side {
+    LEFT,
+    RIGHT,
+    ANY
+}
+
+// Базовый класс роли слова в предложении
+class Role {
+    obj prop sideFromParent: Side; // Любая роль определяет сторону слова от родителя
+    rel leftSiblingOf(Role) {1 -> *}; // Слово с этой ролью может быть всегда слева от слова с другой ролью при общем родителе
+    rel rightSiblingOf(Role): opposite to Role->leftSiblingOf;
+}
+
+// Роль слова: глагол. Является главным в предложении (по Universal Dependencies)
+obj verb : Role {
+    sideFromParent = ANY;
+}
+
+// Роль слова: вспомогательный глагол вопроса (всегда зависит от verb, всегда слева от него, всегда слева от субъекта)
+obj auxQuestion: Role {
+    sideFromParent = LEFT;
+    leftSiblingOf(subj);
+}
+
+// Роль слова: лицо, соверщающее действие (всегда зависит от verb, всегда слева от него, всегда слева от вспомогательного глагола вопроса)
+obj subj : Role {
+    sideFromParent = LEFT;
+    leftSiblingOf(auxStatement);
+}
+
+// Роль слова: вспомогательный глагол утверждения (всегда зависит от verb, всегда слева от него)
+obj auxStatement: Role {
+    sideFromParent = LEFT;
+}
+

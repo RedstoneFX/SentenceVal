@@ -1,0 +1,23 @@
+
+tpg validateSentence(input: ActualWord, currentWord: ActualWord = input) {
+
+
+    var next : ActualWord = input;
+
+    cycle and ($current.text == "am") with ActualWord current {
+        true -> {
+            conclude: true [msg="true end!";];
+        }
+        false -> {
+            conclude: false [msg="false end!";];
+        }
+        body -> {
+            conclude: true [msg="body!";];
+        }
+    } as debug
+}
+
+
+meta for debug [
+    msg = "cycle aggregation node!";
+]

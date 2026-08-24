@@ -1,0 +1,29 @@
+
+class AwaitedWord {
+    rel hasRole(Role): { 1 -> * };
+    rel hasParent(Role): { 1 -> * };
+    obj prop text: string;
+}
+
+
+// Ожидаемое предложение:
+// I am learning
+// subj + aux:s + verb
+
+
+// root
+obj awaited1: AwaitedWord {
+    text = "learning";
+}
+
+obj awaited2: AwaitedWord {
+    text = "I";
+    hasRole(subj);
+    hasParent(awaited1);
+}
+
+obj awaited3: AwaitedWord {
+    text = "am";
+    hasRole(auxStatement);
+    hasParent(awaited1);
+}

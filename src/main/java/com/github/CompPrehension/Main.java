@@ -10,32 +10,23 @@ import its.reasoner.ReasoningOptions;
 import its.reasoner.nodes.DecisionTreeReasoner;
 import its.reasoner.nodes.DecisionTreeTrace;
 import its.reasoner.nodes.DecisionTreeTraceElement;
+import org.apache.jena.base.Sys;
 
 import java.io.FileNotFoundException;
 import java.util.Map;
 
 public class Main {
     public static void main(String[] args) {
-        try {
-            helloWorld();
-        } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    private static DecisionTreeTrace isGoodPetFor(DomainSolvingModel model, String humanName, String petName) {
+        DomainSolvingModel model = new DomainSolvingModel("packedSentence", DomainSolvingModel.BuildMethod.LOQI, false);
         DomainModel domain = model.getDomainModel();
         Map<String, ObjectRef> variables = LearningSituation.collectDecisionTreeVariables(model.getDomainModel());
         ObjectContainer objects = domain.getObjects();
 
-        ObjectRef owner = objects.get(humanName).getReference();
-        ObjectRef pet = objects.get(petName).getReference();
-
-        variables.put("owner", owner);
-        variables.put("pet", pet);
+        ObjectRef actSentence = objects.get("input1").getReference();
+        variables.put("input", actSentence);
 
         LearningSituation situation = new LearningSituation(
-                model.getDomainModel(),
+                domain,
                 variables,
                 null
         );
@@ -44,33 +35,13 @@ public class Main {
 
         DecisionTreeTrace trace = DecisionTreeReasoner.solve(model.getDecisionTree(), situation, opt);
 
-        return trace;
-    }
-    
-    private static void helloWorld() throws FileNotFoundException {
-
-        DomainSolvingModel model = new DomainSolvingModel("model", DomainSolvingModel.BuildMethod.LOQI, false);
-
-        String[] humanNames = {"Alice", "Peter"};
-        String[] petNames = {"Basya", "Tuzik", "Sharik", "Ostin"};
-
-        for(String human : humanNames) {
-            for(String pet : petNames) {
-                DecisionTreeTrace answer = isGoodPetFor(model, human, pet);
-                System.out.print(human);
-                System.out.print(" + ");
-                System.out.print(pet);
-                System.out.print(" = ");
-                System.out.println(answer.getBranchResult());
-                System.out.println(describeAnswer(answer));
-                System.out.println();
-            }
-        }
-
+        System.out.println(describeAnswer(trace));
     }
 
     private static String describeAnswer(DecisionTreeTrace answer) {
         StringBuilder description = new StringBuilder();
+
+        System.out.println("Статус: " + answer.getBranchResult());
 
         for (DecisionTreeTraceElement<?, ?> element : answer) {
             MetaData meta = element.getNode().getMetadata();

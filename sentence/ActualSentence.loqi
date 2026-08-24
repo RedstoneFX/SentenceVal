@@ -1,0 +1,25 @@
+
+class ActualWord {
+    obj prop text: string;
+    isAfter(ActualWord): linear;
+}
+
+
+// Фактическое предложение:
+// am I learning
+// aux:q + subj + verb
+
+
+obj actual1: ActualWord {
+    text = "am";
+}
+
+obj actual2: ActualWord {
+    text = "I";
+    isAfter(actual1);
+}
+
+obj actual3: ActualWord {
+    text = "learning";
+    isAfter(actual2);
+}
