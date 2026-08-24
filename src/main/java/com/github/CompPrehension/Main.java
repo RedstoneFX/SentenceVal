@@ -6,6 +6,7 @@ import its.model.definition.MetaData;
 import its.model.definition.ObjectContainer;
 import its.model.definition.ObjectRef;
 import its.reasoner.LearningSituation;
+import its.reasoner.ReasoningOptions;
 import its.reasoner.nodes.DecisionTreeReasoner;
 import its.reasoner.nodes.DecisionTreeTrace;
 import its.reasoner.nodes.DecisionTreeTraceElement;
@@ -39,16 +40,16 @@ public class Main {
                 null
         );
 
-        DecisionTreeTrace trace = DecisionTreeReasoner.solve(
-                model.getDecisionTree(),
-                situation
-        );
+        ReasoningOptions opt = new ReasoningOptions();
+
+        DecisionTreeTrace trace = DecisionTreeReasoner.solve(model.getDecisionTree(), situation, opt);
+
         return trace;
     }
     
     private static void helloWorld() throws FileNotFoundException {
 
-        DomainSolvingModel model = new DomainSolvingModel("model", DomainSolvingModel.BuildMethod.LOQI);
+        DomainSolvingModel model = new DomainSolvingModel("model", DomainSolvingModel.BuildMethod.LOQI, false);
 
         String[] humanNames = {"Alice", "Peter"};
         String[] petNames = {"Basya", "Tuzik", "Sharik", "Ostin"};
