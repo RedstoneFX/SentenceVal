@@ -2,7 +2,14 @@
 
 // Это корневой файл грамматики, определяющий базовые "абстрактные" классы, объекты которых должны быть описаны конфигами отдельных языков.
 
+enum Side {
+    ANY,
+    RIGHT,
+    LEFT
+}
+
 class DependencyType {
+    obj prop hasSideFromParent: Side;
     rel alwaysBefore(DependencyType);
     rel alwaysAfter(DependencyType);
 }

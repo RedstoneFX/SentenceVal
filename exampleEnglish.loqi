@@ -2,7 +2,7 @@
 
 obj CONJ : DependencyType {
     // Связывает элементы перечисления или корни в сложносочиненном предложении.
-    // Всегда СПРАВА от любого родителя
+    hasSideFromParent = Side:RIGHT; // Всегда СПРАВА от любого родителя
 }
 
 obj ROOT : DependencyType {
@@ -11,91 +11,91 @@ obj ROOT : DependencyType {
 
 obj NSUBJ : DependencyType {
     // Субьект, совершающий действие в глаголе.
-    // Всегда СЛЕВА от родителя (глагола).
+    hasSideFromParent = Side:LEFT; // Всегда СЛЕВА от родителя (глагола).
 }
 
 obj OBJ : DependencyType {
     // Объект, над которым совершается действие.
-    // Всегда СПРАВА от родителя (глагола).
+    hasSideFromParent = Side:RIGHT; // Всегда СПРАВА от родителя (глагола).
 }
 
 obj AUX_STATEMENT : DependencyType {
     // Вспомогательный глагол в утвердительном предложении( "I am right ." )
-    // Всегда СЛЕВА от родителя (глагола).
-    // Всегла СПРАВА от сиблинга с NSUBJ (субьекта).
+    hasSideFromParent = Side:LEFT; // Всегда СЛЕВА от родителя (глагола).
+    // TODO: Всегда СПРАВА от сиблинга с NSUBJ (субьекта).
 }
 
 obj AUX_QUESTION : DependencyType {
     // Вспомогательный глагол в вопросительном предложении( "Am I right ?" )
-    // Всегда СПРАВА от родителя (глагола).
-    // Всегла СЛЕВА от сиблинга с NSUBJ (субьекта).
+    hasSideFromParent = Side:RIGHT; // Всегда СПРАВА от родителя (глагола).
+    // TODO: Всегла СЛЕВА от сиблинга с NSUBJ (субьекта).
 }
 
 obj NMOD : DependencyType {
     // Спецификатор, что-то типа прилагательного, но может быть и титулом/видом, например "Professor Higgings" или "the Chair's office".
-    // TODO: Обычно стоит слева, но есть исключения. Либо вводить новые отношения, либо разделять на подвиды.
+    hasSideFromParent = Side:LEFT; // TODO: Обычно стоит слева, но есть исключения. Либо вводить новые отношения, либо разделять на подвиды.
 }
 
 obj NMOD_SPECIFICATION : DependencyType {
     // NMOD подвида или титула.
-    // Всегда находится СЛЕВА от родительского слова. Нет никакого дочернего CASE;
+    hasSideFromParent = Side:LEFT; // TODO: Всегда находится СЛЕВА от родительского слова. Нет никакого дочернего CASE;
 }
 
 obj CASE : DependencyType {
     // Союз, частица и т.п., по типу for, in, of, into.
-    // Обычно СЛЕВА от родителя, но есть исключение в виде принадлежности "'s";
+    hasSideFromParent = Side:LEFT; // TODO: Обычно СЛЕВА от родителя, но есть исключение в виде принадлежности "'s";
 }
 
 obj CASE_POSS : DependencyType {
     // Частица принадлежности "'s".
-    // Всегда СПРАВА от родителя.
+    hasSideFromParent = Side:RIGHT; // Всегда СПРАВА от родителя.
     // TODO: Всегда вплотную к родителю.
 }
 
 obj NMOD_POSS : DependencyType {
     // NMOD принадлежности.
     // Связывает предмет с владельцем (родителем).
-    // Всегда СЛЕВА от родителя.
+    hasSideFromParent = Side:LEFT; // Всегда СЛЕВА от родителя.
 }
 
 obj AMOD : DependencyType {
     // Прилагательное.
-    // Обычно, СЛЕВА от родителя (существительного), но может быть и СПРАВА.
+    hasSideFromParent = Side:LEFT; // Обычно, СЛЕВА от родителя (существительного), но может быть и СПРАВА.
     // TODO: Исключение: There is [nothing] -amod-> [wrong]
     // Грамматически, сказать "There is wrong nothing" - корректно, но так никто не говорит.
 }
 
 obj AMOD_INVERSE : DependencyType {
     // Тоже, что и AMOD, но для исключения.
-    // Всегда СПРАВА от родителя.
+    hasSideFromParent = Side:RIGHT; // Всегда СПРАВА от родителя.
 }
 
 obj DET : DependencyType {
     // THE/WHICH.
-    // Всегда СЛЕВА от родителя.
+    hasSideFromParent = Side:LEFT; // Всегда СЛЕВА от родителя.
 }
 
 obj ACL : DependencyType {
     // "предикативное определение существительного"
-    // Всегда СПРАВА от родителя.
+    hasSideFromParent = Side:RIGHT; // Всегда СПРАВА от родителя.
     // TODO: Всегда СПРАВА от сиблингов (их много, и ничего не объяснено) https://universaldependencies.org/u/dep/acl.html
 }
 
 obj CC : DependencyType {
     // Союз.
-    // Всегда СЛЕВА от родителя.
+    hasSideFromParent = Side:LEFT; // Всегда СЛЕВА от родителя.
     // TODO: Обычно, стоит вплотную к левому сиблингу родителя.
 }
 
 obj COMPOUND : DependencyType {
     // Модульное дополнение родителю, которое должно рассматриваться как его часть.
-    // TODO: Обычно СЛЕВА от родителя, но есть исключения.
+    hasSideFromParent = Side:LEFT; // TODO: Обычно СЛЕВА от родителя, но есть исключения.
     // TODO: Обычно он в-плотную к родителю, но не всегда. https://universaldependencies.org/u/dep/compound.html
 }
 
 obj COMPOUND_PRT : DependencyType {
     // Почти как COMPOUND, но описывает часть устойчевых выражений или комбинированных глаголов-фраз "put up", "get on", "take of".
-    // Всегда СПРАВА от родителя (те самые модификаторы "up", "on").
+    hasSideFromParent = Side:RIGHT; // Всегда СПРАВА от родителя (те самые модификаторы "up", "on").
 }
 
 obj PUNCT : DependencyType {
