@@ -6,6 +6,7 @@ import its.model.definition.loqi.DomainLoqiBuilder;
 import java.io.*;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.HashMap;
 
 public class Main {
 
@@ -19,8 +20,12 @@ public class Main {
 
         ObjectContainer dependencyTypes = languageModel.getObjects();
 
-        for (ObjectDef dependencyType : dependencyTypes) {
-            System.out.println(dependencyType.getName());
+        for (ObjectDef object : dependencyTypes) {
+            if(object.getClassName().equals("DependencyType")) {
+                System.out.println(object.getName());
+            } else if(object.getClassName().equals("DependencyTypeUnsafe")) {
+                System.out.println(object.getName() + " [unsafe]");
+            }
         }
     }
 }

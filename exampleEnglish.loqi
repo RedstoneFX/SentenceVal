@@ -31,7 +31,7 @@ obj AUX_QUESTION : DependencyType {
     alwaysLeftFrom(NSUBJ); // Всегла СЛЕВА от сиблинга с NSUBJ (субьекта).
 }
 
-obj NMOD : DependencyType {
+obj NMOD : DependencyTypeUnsafe {
     // Спецификатор, что-то типа прилагательного, но может быть и титулом/видом, например "Professor Higgings" или "the Chair's office".
     hasSideFromParent = Side:LEFT; // TODO: Обычно стоит слева, но есть исключения. Либо вводить новые отношения, либо разделять на подвиды.
 }
@@ -41,7 +41,7 @@ obj NMOD_SPECIFICATION : DependencyType {
     hasSideFromParent = Side:LEFT; // TODO: Всегда находится СЛЕВА от родительского слова. Нет никакого дочернего CASE;
 }
 
-obj CASE : DependencyType {
+obj CASE : DependencyTypeUnsafe {
     // Союз, частица и т.п., по типу for, in, of, into.
     hasSideFromParent = Side:LEFT; // TODO: Обычно СЛЕВА от родителя, но есть исключение в виде принадлежности "'s";
 }
@@ -58,7 +58,7 @@ obj NMOD_POSS : DependencyType {
     hasSideFromParent = Side:LEFT; // Всегда СЛЕВА от родителя.
 }
 
-obj AMOD : DependencyType {
+obj AMOD : DependencyTypeUnsafe {
     // Прилагательное.
     hasSideFromParent = Side:LEFT; // Обычно, СЛЕВА от родителя (существительного), но может быть и СПРАВА.
     // TODO: Исключение: There is [nothing] -amod-> [wrong]
@@ -89,7 +89,7 @@ obj CC : DependencyType {
     // TODO: Обычно, стоит вплотную к левому сиблингу родителя. Тобишь, он всегда СЛЕВА от своих сиблингов.
 }
 
-obj COMPOUND : DependencyType {
+obj COMPOUND : DependencyTypeUnsafe {
     // Модульное дополнение родителю, которое должно рассматриваться как его часть.
     hasSideFromParent = Side:LEFT; // TODO: Обычно СЛЕВА от родителя, но есть исключения.
     // TODO: Обычно он в-плотную к родителю, но не всегда. https://universaldependencies.org/u/dep/compound.html
@@ -99,14 +99,15 @@ obj COMPOUND : DependencyType {
 obj COMPOUND_PRT : DependencyType {
     // Почти как COMPOUND, но описывает часть устойчевых выражений или комбинированных глаголов-фраз "put up", "get on", "take of".
     hasSideFromParent = Side:RIGHT; // Всегда СПРАВА от родителя (те самые модификаторы "up", "on").
+    // TODO: Всегда вплотную к родителю
 }
 
-obj PUNCT : DependencyType {
+obj PUNCT : DependencyTypeUnsafe {
     // Пунктуация.
     // TODO: Точно нельзя сказать, как она должна быть поставлена, так что нужно определить непосредственно в дереве.
 }
 
-obj PARATAXIS : DependencyType {
+obj PARATAXIS : DependencyTypeUnsafe {
     // Связь между отдаленными и малосвязанными словами.
     // Вообще толком ничего не определяет, ни позицию, ничего... Может стоять где угодно или зависеть от контекста/смысла.
     // Нет сиблингов между ним и родителем.
