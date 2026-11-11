@@ -22,13 +22,13 @@ obj OBJ : DependencyType {
 obj AUX_STATEMENT : DependencyType {
     // Вспомогательный глагол в утвердительном предложении( "I am right ." )
     hasSideFromParent = Side:LEFT; // Всегда СЛЕВА от родителя (глагола).
-    alwaysRightFrom(NSUBJ); // Всегда СПРАВА от сиблинга с NSUBJ (субьекта).
+    alwaysAfter(NSUBJ); // Всегда СПРАВА от сиблинга с NSUBJ (субьекта).
 }
 
 obj AUX_QUESTION : DependencyType {
     // Вспомогательный глагол в вопросительном предложении( "Am I right ?" )
     hasSideFromParent = Side:RIGHT; // Всегда СПРАВА от родителя (глагола).
-    alwaysLeftFrom(NSUBJ); // Всегла СЛЕВА от сиблинга с NSUBJ (субьекта).
+    alwaysBefore(NSUBJ); // Всегла СЛЕВА от сиблинга с NSUBJ (субьекта).
 }
 
 obj NMOD : DependencyTypeUnsafe {
@@ -74,7 +74,7 @@ obj AMOD_INVERSE : DependencyType {
 obj DET : DependencyType {
     // THE/WHICH.
     hasSideFromParent = Side:LEFT; // Всегда СЛЕВА от родителя.
-    alwaysLeftFrom(AMOD); // Всегда слева от сиблингов вида AMOD
+    alwaysBefore(AMOD); // Всегда слева от сиблингов вида AMOD
 }
 
 obj ACL : DependencyType {
