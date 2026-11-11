@@ -2,16 +2,19 @@ package com.github.CompPrehension;
 
 import its.model.definition.*;
 import its.model.definition.loqi.DomainLoqiBuilder;
+import its.model.definition.loqi.DomainLoqiWriter;
 
 import java.io.*;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.HashMap;
+import java.util.HashSet;
 
 public class Main {
 
     private static final Path ACTIVE_LANGUAGE_FILENAME = Paths.get("exampleEnglish.loqi");
     private static final Path TARGET_SENTENCE_FILENAME = Paths.get("exampleSentence.loqi");
+    private static final Path PROCESSED_DOMAIN_FILENAME = Paths.get("temp/processedDomain.loqi");
 
     public static void main(String[] args) throws IOException {
         Path languageModelFilename = Preprocessor.computeExercise(ACTIVE_LANGUAGE_FILENAME, TARGET_SENTENCE_FILENAME);
@@ -27,5 +30,11 @@ public class Main {
                 System.out.println(object.getName() + " [unsafe]");
             }
         }
+
+        SentenceCompactor.compact(languageModel);
+
+        BufferedWriter writer = new BufferedWriter(new FileWriter(PROCESSED_DOMAIN_FILENAME.toFile(), false));
+        DomainLoqiWriter.saveDomain(languageModel, writer, new HashSet<>());
+        writer.close();
     }
 }
