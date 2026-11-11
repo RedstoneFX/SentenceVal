@@ -22,13 +22,13 @@ obj OBJ : DependencyType {
 obj AUX_STATEMENT : DependencyType {
     // Вспомогательный глагол в утвердительном предложении( "I am right ." )
     hasSideFromParent = Side:LEFT; // Всегда СЛЕВА от родителя (глагола).
-    // TODO: Всегда СПРАВА от сиблинга с NSUBJ (субьекта).
+    alwaysRightFrom(NSUBJ); // Всегда СПРАВА от сиблинга с NSUBJ (субьекта).
 }
 
 obj AUX_QUESTION : DependencyType {
     // Вспомогательный глагол в вопросительном предложении( "Am I right ?" )
     hasSideFromParent = Side:RIGHT; // Всегда СПРАВА от родителя (глагола).
-    // TODO: Всегла СЛЕВА от сиблинга с NSUBJ (субьекта).
+    alwaysLeftFrom(NSUBJ); // Всегла СЛЕВА от сиблинга с NSUBJ (субьекта).
 }
 
 obj NMOD : DependencyType {
@@ -84,13 +84,14 @@ obj ACL : DependencyType {
 obj CC : DependencyType {
     // Союз.
     hasSideFromParent = Side:LEFT; // Всегда СЛЕВА от родителя.
-    // TODO: Обычно, стоит вплотную к левому сиблингу родителя.
+    // TODO: Обычно, стоит вплотную к левому сиблингу родителя. Тобишь, он всегда СЛЕВА от своих сиблингов.
 }
 
 obj COMPOUND : DependencyType {
     // Модульное дополнение родителю, которое должно рассматриваться как его часть.
     hasSideFromParent = Side:LEFT; // TODO: Обычно СЛЕВА от родителя, но есть исключения.
     // TODO: Обычно он в-плотную к родителю, но не всегда. https://universaldependencies.org/u/dep/compound.html
+    // TODO: Тобишь, он всегда СПРАВА от своих сиблингов, но не всегда.
 }
 
 obj COMPOUND_PRT : DependencyType {
