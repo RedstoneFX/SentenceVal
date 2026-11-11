@@ -2,7 +2,6 @@ package com.github.CompPrehension;
 
 import its.model.definition.*;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -10,6 +9,9 @@ import java.util.Set;
 public class SentenceCompactor {
 
     public static void compact(DomainModel model) {
+
+        clarifySiblingDependencies(model);
+
         for (ObjectDef object : model.getObjects()) {
             if(!object.getClassName().equals("TargetWord")) continue;
             interpolateDataForTargetWord(object);
@@ -44,9 +46,7 @@ public class SentenceCompactor {
         return ancestors;
     }
 
-    private static void interpolateDataForTargetWord(ObjectDef word) {
-
-        // Заполнить _ancestor
+    private static void fillInAncestorsFor(ObjectDef word) {
         Set<ObjectDef> ancestors = getAncestors(word);
         if(!ancestors.isEmpty()) {
             for (ObjectDef ancestor : ancestors) {
@@ -59,11 +59,67 @@ public class SentenceCompactor {
                 word.getRelationshipLinks().add(statement);
             }
         }
-        Set<ObjectDef> siblings = getSiblingWords(word);
+    }
+
+    private static Set<ObjectDef> getDependencies(DomainModel model) {
+        Set<ObjectDef> dependencies = new HashSet<>();
+        for (ObjectDef object : model.getObjects()) {
+            if(!object.getClassName().equals("DependencyType")) continue;
+            dependencies.add(object);
+        }
+        return dependencies;
+    }
+
+    private static boolean setDependencySiblingsOrder(ObjectDef depBefore, ObjectDef depAfter) {
+
+        // TODO: weak for looped dependencies!
+
+        boolean hasLikeA = false;
+        for (RelationshipLinkStatement rel : depBefore.getRelationshipLinks()) {
+            if(rel.getRelationshipName().equals("alwaysBefore") && rel.getObjects().contains(depAfter)) {
+                hasLikeA = true;
+                break;
+            }
+        }
+
+        boolean hasLikeB = false;
+        for (RelationshipLinkStatement rel : depAfter.getRelationshipLinks()) {
+            if(rel.getRelationshipName().equals("alwaysAfter") && rel.getObjects().contains(depBefore)) {
+                hasLikeB = true;
+                break;
+            }
+        }
+
+        if(!hasLikeA) depBefore.getRelationshipLinks().add(new RelationshipLinkStatement(depBefore, "alwaysBefore", List.of(depAfter.getName()), ParamsValues.getEMPTY()));
+        if(!hasLikeB) depAfter.getRelationshipLinks().add(new RelationshipLinkStatement(depBefore, "alwaysAfter", List.of(depBefore.getName()), ParamsValues.getEMPTY()));
+        return !(hasLikeA && hasLikeB);
+    }
+
+    private static void clarifySiblingDependencies(DomainModel model) {
+
+        Set<ObjectDef> dependencies = getDependencies(model);
+
+        int siblingsUpdated;
+        do {
+            siblingsUpdated = 0;
+            for (ObjectDef rootDep : dependencies) {
+                for (RelationshipLinkStatement relation : new HashSet<>(rootDep.getRelationshipLinks())) {
+                    if(relation.getRelationshipName().equals("alwaysBefore")) {
+                        if(setDependencySiblingsOrder(rootDep, relation.getObjects().getFirst()))
+                            siblingsUpdated += 1;
+                    } else if (relation.getRelationshipName().equals("alwaysAfter")) {
+                        if(setDependencySiblingsOrder(relation.getObjects().getFirst(), rootDep))
+                            siblingsUpdated += 1;
+                    }
+                }
+            }
+        } while (siblingsUpdated > 0);
+    }
+
+    private static void interpolateDataForTargetWord(ObjectDef word) {
+        // Заполнить _ancestor
+        fillInAncestorsFor(word);
         // Заполнить alwaysRightFrom
         // Заполнить alwaysLeftFrom
-
-
-        System.out.println(123);
     }
 }
