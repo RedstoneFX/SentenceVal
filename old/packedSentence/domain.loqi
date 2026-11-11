@@ -1,17 +1,9 @@
 //////////////////// ПОСТОЯННЫЕ
 
-enum Side {
-    LEFT,
-    RIGHT,
-    ANY
-}
-
 class PackedWord {
     obj prop text : string;
-    obj prop hasSide: Side;
     rel isChildOf(PackedWord) : partial;
-    rel isLeftSiblingOf(PackedWord);
-    rel isRightSiblingOf(PackedWord) : opposite to PackedWord->isLeftSiblingOf;
+    rel isLeftFrom(PackedWord);
 }
 
 class ActualWord {
@@ -32,9 +24,9 @@ class ActualWord {
 // Слово "I" зависит от слова "learning" и всегда СЛЕВА от него.
 obj word1 : PackedWord {
     text = "I";
-    hasSide(LEFT);
     isChildOf(word3);
-    isLeftSiblingOf(word2);
+    isLeftFrom(word3);
+    isLeftFrom(word2);
 }
 
 // Слово "am" зависит от слова "learning" и всегда СЛЕВА от него.
