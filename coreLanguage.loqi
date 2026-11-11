@@ -1,0 +1,14 @@
+
+
+// Это корневой файл грамматики, определяющий базовые "абстрактные" классы, объекты которых должны быть описаны конфигами отдельных языков.
+
+class DependencyType {
+    rel alwaysBefore(DependencyType);
+    rel alwaysAfter(DependencyType);
+}
+
+class TargetWord {
+    obj prop text: string;
+    rel hasDependency(DependencyType) : {* -> 1};
+    rel parent(TargetWord): partial;
+}
