@@ -5,6 +5,7 @@ import java.nio.file.FileAlreadyExistsException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 public class Preprocessor {
@@ -15,9 +16,14 @@ public class Preprocessor {
     private static String readFromFile(Path filename) throws FileNotFoundException {
         File dataFile = filename.toFile();
         Scanner input = new Scanner (dataFile);
-        String text = input.useDelimiter("\\Z").next();
-        input.close();
-        return text;
+        try {
+            String text = input.useDelimiter("\\Z").next();
+            input.close();
+            return text;
+        } catch(NoSuchElementException e) {
+            input.close();
+            return "";
+        }
     }
 
     private static void combineTextFiles(Path[] filenames, Path outFilename) throws IOException {
