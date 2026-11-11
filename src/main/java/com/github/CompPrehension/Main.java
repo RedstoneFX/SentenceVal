@@ -10,9 +10,10 @@ import java.nio.file.Paths;
 public class Main {
 
     private static final Path ACTIVE_LANGUAGE_FILENAME = Paths.get("exampleEnglish.loqi");
+    private static final Path TARGET_SENTENCE_FILENAME = Paths.get("exampleSentence.loqi");
 
     public static void main(String[] args) throws IOException {
-        Path languageModelFilename = Preprocessor.computeLanguageDomain(ACTIVE_LANGUAGE_FILENAME);
+        Path languageModelFilename = Preprocessor.computeExercise(ACTIVE_LANGUAGE_FILENAME, TARGET_SENTENCE_FILENAME);
 
         DomainModel languageModel = DomainLoqiBuilder.buildDomain(new FileReader(languageModelFilename.toFile()));
 

@@ -1,0 +1,163 @@
+
+
+// Research on adult - learned second language ( L2 ) has provided considerable insight
+// into the neurocognitive mechanisms underlying the learning and processing of L2 grammar
+// 26 words
+
+obj PROVIDED_WORD : TargetWord {
+    text = "provided";
+    hasDependency(ROOT);
+}
+
+obj RESEARCH_WORD : TargetWord {
+    text = "Research";
+    hasDependency(NSUBJ);
+    withParent(PROVIDED_WORD);
+}
+
+obj HAS_WORD : TargetWord {
+    text = "has";
+    hasDependency(AUX_STATEMENT);
+    withParent(PROVIDED_WORD);
+}
+
+obj INSIGHT_WORD : TargetWord {
+    text = "insight";
+    hasDependency(OBJ);
+    withParent(PROVIDED_WORD);
+}
+
+obj LANGUAGE_WORD : TargetWord {
+    text = "language";
+    hasDependency(NMOD);
+    withParent(RESEARCH_WORD);
+}
+
+obj CONSIDERABLE_WORD : TargetWord {
+    text = "considerable";
+    hasDependency(AMOD);
+    withParent(INSIGHT_WORD);
+}
+
+obj MECHANISMS_WORD : TargetWord {
+    text = "nechanisms";
+    hasDependency(NMOD);
+    withParent(INSIGHT_WORD);
+}
+
+obj ON_WORD : TargetWord {
+    text = "on";
+    hasDependency(CASE);
+    withParent(LANGUAGE_WORD);
+}
+
+obj LEARNED_WORD : TargetWord {
+    text = "learned";
+    hasDependency(AMOD);
+    withParent(LANGUAGE_WORD);
+}
+
+obj SECOND_WORD : TargetWord {
+    text = "second";
+    hasDependency(AMOD);
+    withParent(LANGUAGE_WORD);
+}
+
+obj L2_WORD : TargetWord {
+    text = "L2";
+    hasDependency(APPOS);
+    withParent(LANGUAGE_WORD);
+}
+
+obj INTO_WORD : TargetWord {
+    text = "into";
+    hasDependency(CASE);
+    withParent(MECHANISMS_WORD);
+}
+
+obj THE_WORD : TargetWord {
+    text = "the";
+    hasDependency(DET);
+    withParent(MECHANISMS_WORD);
+}
+
+obj NEUROCOGNITIVE_WORD : TargetWord {
+    text = "neurocognitive";
+    hasDependency(AMOD);
+    withParent(MECHANISMS_WORD);
+}
+
+obj UNDERLYING_WORD : TargetWord {
+    text = "underlying";
+    hasDependency(ACL);
+    withParent(MECHANISMS_WORD);
+}
+
+obj ADULT_WORD : TargetWord {
+    text = "adult";
+    hasDependency(COMPOUND);
+    withParent(LEARNED_WORD);
+}
+
+obj OPEN_BRACKET_WORD : TargetWord {
+    text = "(";
+    hasDependency(PUNCT);
+    withParent(L2_WORD);
+}
+
+obj CLOSE_BRACKET_WORD : TargetWord {
+    text = ")";
+    hasDependency(PUNCT);
+    withParent(L2_WORD);
+}
+
+obj LEARNING_WORD : TargetWord {
+    text = "learning";
+    hasDependency(OBJ);
+    withParent(UNDERLYING_WORD);
+}
+
+obj DASH_WORD : TargetWord {
+    text = "-";
+    hasDependency(PUNCT);
+    withParent(ADULT_WORD);
+}
+
+obj THE_WORD_2 : TargetWord {
+    text = "the";
+    hasDependency(DET);
+    withParent(LEARNING_WORD);
+}
+
+obj PROCESSING_WORD : TargetWord {
+    text = "processing";
+    hasDependency(conj);
+    withParent(LEARNING_WORD);
+}
+
+obj GRAMMAR_WORD : TargetWord {
+    text = "grammar";
+    hasDependency(nmod);
+    withParent(LEARNING_WORD);
+}
+
+obj AND_WORD : TargetWord {
+    text = "and";
+    hasDependency(CC);
+    withParent(PROCESSING_WORD);
+}
+
+obj OF_WORD : TargetWord {
+    text = "Research";
+    hasDependency(CASE);
+    withParent(GRAMMAR_WORD);
+}
+
+obj L2_WORD_2 : TargetWord {
+    text = "L2";
+    hasDependency(COMPOUND);
+    withParent(GRAMMAR_WORD);
+}
+
+
+

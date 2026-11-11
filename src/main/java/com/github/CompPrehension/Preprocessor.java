@@ -41,8 +41,8 @@ public class Preprocessor {
         writer.close();
     }
 
-    public static Path computeLanguageDomain(Path langFilename) throws IOException {
-        combineTextFiles(new Path[]{CORE_LANG_FILENAME, langFilename}, TEMP_LANG_MODEL_FILENAME);
+    public static Path computeExercise(Path langFilename, Path sentenceFilename) throws IOException {
+        combineTextFiles(new Path[]{CORE_LANG_FILENAME, langFilename, sentenceFilename}, TEMP_LANG_MODEL_FILENAME);
         return TEMP_LANG_MODEL_FILENAME;
     }
 }

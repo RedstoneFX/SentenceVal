@@ -62,6 +62,7 @@ obj AMOD : DependencyType {
     // Прилагательное.
     hasSideFromParent = Side:LEFT; // Обычно, СЛЕВА от родителя (существительного), но может быть и СПРАВА.
     // TODO: Исключение: There is [nothing] -amod-> [wrong]
+    // TODO: Видимо, порядок относительно таких же сиблингов зависит от части речи (https://universaldependencies.org/conllu_viewer.html)
     // Грамматически, сказать "There is wrong nothing" - корректно, но так никто не говорит.
 }
 
@@ -73,6 +74,7 @@ obj AMOD_INVERSE : DependencyType {
 obj DET : DependencyType {
     // THE/WHICH.
     hasSideFromParent = Side:LEFT; // Всегда СЛЕВА от родителя.
+    alwaysLeftFrom(AMOD); // Всегда слева от сиблингов вида AMOD
 }
 
 obj ACL : DependencyType {
@@ -108,4 +110,10 @@ obj PARATAXIS : DependencyType {
     // Связь между отдаленными и малосвязанными словами.
     // Вообще толком ничего не определяет, ни позицию, ничего... Может стоять где угодно или зависеть от контекста/смысла.
     // Нет сиблингов между ним и родителем.
+}
+
+obj APPOS : DependencyType {
+    // Уточнение.
+    hasSideFromParent = Side:RIGHT; // Всегда СПРАВА от родителя.
+    // Обычно, вплотную к родителю.
 }

@@ -17,5 +17,5 @@ class DependencyType {
 class TargetWord {
     obj prop text: string;
     rel hasDependency(DependencyType) : {* -> 1};
-    rel parent(TargetWord): partial;
+    rel withParent(TargetWord): partial;
 }
